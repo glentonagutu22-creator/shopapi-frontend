@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import "../styles/Admin.css";
+import { toast } from "react-toastify";
 
 function Admin() {
   const [products, setProducts] = useState([]);
@@ -54,7 +55,7 @@ function Admin() {
     );
 
 
-    alert("Product added successfully");
+    toast.success("Product added successfully");
 
 
     setNewProduct({
@@ -127,7 +128,7 @@ function Admin() {
         }
       );
 
-      alert("Product updated successfully");
+      toast.success("Product updated successfully");
 
       setEditingProduct(null);
 

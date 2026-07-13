@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -48,6 +50,16 @@ function App() {
  element={<AdminOrders />} 
 />
       </Routes>
+      <>
+  <Routes>
+    {/* your routes */}
+  </Routes>
+
+  <ToastContainer
+    position="top-right"
+    autoClose={3000}
+  />
+</>
     </BrowserRouter>
   );
 }

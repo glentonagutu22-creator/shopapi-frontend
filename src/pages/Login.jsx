@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "../styles/Login.css";
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function Login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("role", response.data.role);
 
-      alert("Login successful");
+      toast.success("Login successful");
 
       navigate("/");
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 function AdminOrders() {
 
@@ -41,7 +42,7 @@ function AdminOrders() {
       }
     );
 
-    alert("Order status updated successfully");
+    toast.success("Order status updated successfully");
 
     fetchOrders();
 

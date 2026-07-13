@@ -3,6 +3,7 @@ import { CartContext } from "../context/CartContext";
 import "../styles/Cart.css";
 
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 function Cart() {
     const [phone, setPhone] = useState("");
@@ -22,28 +23,25 @@ async function handleCheckout() {
       }
     );
 
-    alert(response.data.message);
+    toast.success(response.data.message);
 
     // Save the order ID returned by the backend
     setOrderId(response.data.orderId);
-    console.log("Response:", response.data);
-console.log("Order ID from API:", response.data.orderId);
-console.log("Setting orderId...");
-
+    
   } catch (error) {
     console.log(error.response?.data);
 
-    alert(error.response?.data?.message || "Checkout failed");
+    toast.error(error.response?.data?.message || "Checkout failed");
   }
 }
 async function handlePayment() {
   try {
     if (!orderId) {
-      return alert("Please place your order first.");
+      return toast.warning("Please place your order first.");
     }
 
     if (!phone) {
-      return alert("Please enter your M-Pesa phone number.");
+      return toast.warning("Please enter your M-Pesa phone number.");
     }
 
     setLoading(true);
@@ -54,12 +52,12 @@ async function handlePayment() {
       orderId,
     });
 
-    alert(response.data.customerMessage);
+    toast.success(response.data.customerMessage);
 
   } catch (error) {
     console.log(error.response?.data);
 
-    alert(error.response?.data?.message || "Payment failed.");
+    toast.error(error.response?.data?.message || "Payment failed.");
   } finally {
     setLoading(false);
   }

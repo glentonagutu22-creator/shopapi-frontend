@@ -6,6 +6,7 @@ import { CartContext } from "../context/CartContext";
 import "../styles/ProductCard.css";
 
 import api from "../services/api";
+import { toast } from "react-toastify";
 
 
 function ProductCard({ product }) {
@@ -39,7 +40,7 @@ function ProductCard({ product }) {
 
       addToCart(product);
 
-      alert("Product added successfully");
+      toast.success("Product added successfully");
 
 
     } catch (error) {
@@ -47,7 +48,7 @@ function ProductCard({ product }) {
       console.log(error.response);
 
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Failed to add to cart"
       );

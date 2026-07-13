@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
+import { toast } from "react-toastify";
 
 function Register() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function Register() {
 
       console.log(response.data);
 
-      alert("Registration successful");
+      toast.success("Registration successful");
 
       navigate("/login");
 
