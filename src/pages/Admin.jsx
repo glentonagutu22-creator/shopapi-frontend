@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import "../styles/Admin.css";
 
 function Admin() {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ function Admin() {
   category: "",
   price: "",
   stock: "",
-  image: "",
+  image: null,
 });
 
   useEffect(() => {
@@ -21,19 +22,40 @@ function Admin() {
   e.preventDefault();
 
   try {
+
     const token = localStorage.getItem("token");
+
+
+    const formData = new FormData();
+
+
+    formData.append("name", newProduct.name);
+    formData.append("description", newProduct.description);
+    formData.append("brand", newProduct.brand);
+    formData.append("category", newProduct.category);
+    formData.append("price", newProduct.price);
+    formData.append("stock", newProduct.stock);
+
+
+    if (newProduct.image) {
+      formData.append("image", newProduct.image);
+    }
+
 
     await api.post(
       "/api/products",
-      newProduct,
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       }
     );
 
+
     alert("Product added successfully");
+
 
     setNewProduct({
       name: "",
@@ -42,13 +64,17 @@ function Admin() {
       category: "",
       price: "",
       stock: "",
-      image: "",
+      image: null,
     });
+
 
     fetchProducts();
 
+
   } catch (error) {
-    console.log(error);
+
+    console.log(error.response?.data || error.message);
+
   }
 }
 
@@ -114,14 +140,17 @@ function Admin() {
 
 
   return (
-    <div style={{ padding: "30px" }}>
+  <div className="admin-container">
 
-      <h1>Admin Dashboard</h1>
+     <h1 className="admin-title">
+  Admin Dashboard
+</h1>
       <h2>Add Product</h2>
 
-<form onSubmit={addProduct}>
+<form className="admin-form" onSubmit={addProduct}>
 
 <input
+className="admin-input"
 placeholder="Name"
 value={newProduct.name}
 onChange={(e)=>
@@ -134,6 +163,7 @@ name:e.target.value
 
 
 <input
+className="admin-input"
 placeholder="Description"
 value={newProduct.description}
 onChange={(e)=>
@@ -146,6 +176,7 @@ description:e.target.value
 
 
 <input
+className="admin-input"
 placeholder="Brand"
 value={newProduct.brand}
 onChange={(e)=>
@@ -158,6 +189,7 @@ brand:e.target.value
 
 
 <input
+className="admin-input"
 placeholder="Category"
 value={newProduct.category}
 onChange={(e)=>
@@ -170,6 +202,7 @@ category:e.target.value
 
 
 <input
+className="admin-input"
 placeholder="Price"
 value={newProduct.price}
 onChange={(e)=>
@@ -182,6 +215,7 @@ price:e.target.value
 
 
 <input
+className="admin-input"
 placeholder="Stock"
 value={newProduct.stock}
 onChange={(e)=>
@@ -192,23 +226,21 @@ stock:e.target.value
 }
 />
 
-
 <input
-placeholder="Image URL"
-value={newProduct.image}
+className="admin-input"
+type="file"
+accept="image/*"
 onChange={(e)=>
 setNewProduct({
-...newProduct,
-image:e.target.value
+ ...newProduct,
+ image:e.target.files[0]
 })
 }
 />
 
-
-<button>
-Add Product
+<button className="add-btn">
+ Add Product
 </button>
-
 </form>
 
 
@@ -218,6 +250,7 @@ Add Product
           <h2>Edit Product</h2>
 
           <input
+          className="admin-input"
             value={editingProduct.name}
             onChange={(e)=>
               setEditingProduct({
@@ -228,6 +261,7 @@ Add Product
           />
 
           <input
+          className="admin-input"
             value={editingProduct.price}
             onChange={(e)=>
               setEditingProduct({
@@ -238,6 +272,7 @@ Add Product
           />
 
           <input
+          className="admin-input"
             value={editingProduct.stock}
             onChange={(e)=>
               setEditingProduct({
@@ -257,10 +292,18 @@ Add Product
 
 
       <h2>Products</h2>
+<div className="product-grid">
 
-      {products.map((product)=>(
+{products.map((product)=>(
 
-        <div key={product._id}>
+<div 
+className="admin-product-card"
+key={product._id}
+>
+    <img
+src={product.image}
+alt={product.name}
+/> 
 
           <h3>{product.name}</h3>
 
@@ -292,7 +335,9 @@ Add Product
       ))}
 
     </div>
+    </div>
   );
-}
+  }
+
 
 export default Admin;

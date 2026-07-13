@@ -1,9 +1,11 @@
 import { useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
+import "../styles/Register.css";
 
 function Register() {
-     const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,44 +31,62 @@ function Register() {
       console.log(response.data);
 
       alert("Registration successful");
-      navigate("/login")
+
+      navigate("/login");
+
     } catch (error) {
       console.log(error.response?.data || error.message);
     }
   }
-  
 
   return (
-    <div>
-      <h1>Create Account</h1>
+    <div className="register-page">
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="name"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-        />
+      <div className="register-card">
 
-        <input
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <h1>Create Account</h1>
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+        <p className="subtitle">
+          Join ShopSphere today
+        </p>
 
-        <button type="submit">
-          Register
-        </button>
-      </form>
+
+        <form onSubmit={handleSubmit}>
+
+          <input
+            name="name"
+            placeholder="Full name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+
+
+          <input
+            name="email"
+            type="email"
+            placeholder="Email address"
+            value={formData.email}
+            onChange={handleChange}
+          />
+
+
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+
+
+          <button type="submit">
+            Create Account
+          </button>
+
+        </form>
+
+      </div>
+
     </div>
   );
 }

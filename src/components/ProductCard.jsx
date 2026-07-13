@@ -1,18 +1,24 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
+import noImage from "../assets/no-image.png";
+
 import { CartContext } from "../context/CartContext";
 import "../styles/ProductCard.css";
+
 import api from "../services/api";
 
+
 function ProductCard({ product }) {
+
   const { addToCart } = useContext(CartContext);
 
+
   async function handleAddToCart() {
+
     try {
+
       const token = localStorage.getItem("token");
 
-      console.log("Token:", token);
-      console.log("Product ID:", product._id);
 
       const response = await api.post(
         "/api/cart",
@@ -27,47 +33,105 @@ function ProductCard({ product }) {
         }
       );
 
-      console.log("Backend Response:", response.data);
 
-      // Update the frontend cart
+      console.log(response.data);
+
+
       addToCart(product);
 
       alert("Product added successfully");
-    } catch (error) {
-      console.log("Full Error:", error);
-      console.log("Response:", error.response);
 
-      alert(error.response?.data?.message || "Failed to add to cart");
+
+    } catch (error) {
+
+      console.log(error.response);
+
+
+      alert(
+        error.response?.data?.message ||
+        "Failed to add to cart"
+      );
+
     }
+
   }
 
+
   return (
+
     <div className="product-card">
-      <img
-        src={product.image || null}
-        alt={product.name}
-        className="product-image"
-      />
 
-      <h3>{product.name}</h3>
 
-      <p>{product.description}</p>
+      <div className="image-container">
+<img
+  src={product.image || noImage}
+  alt={product.name}
+  className="product-image"
+/>
 
-      <p><strong>Brand:</strong> {product.brand}</p>
+      </div>
 
-      <p><strong>Category:</strong> {product.category}</p>
 
-      <h2>KSh {product.price}</h2>
 
-      <Link to={`/products/${product._id}`}>
-        <button>View Product</button>
-      </Link>
+      <div className="product-content">
 
-      <button onClick={handleAddToCart}>
-        Add to Cart
-      </button>
+
+        <h3>{product.name}</h3>
+
+
+        <p className="description">
+          {product.description}
+        </p>
+
+
+        <p>
+          <strong>Brand:</strong> {product.brand}
+        </p>
+
+
+        <p>
+          <strong>Category:</strong> {product.category}
+        </p>
+
+
+        <h2 className="price">
+          KSh {product.price}
+        </h2>
+
+
+
+        <div className="product-actions">
+
+
+          <Link to={`/products/${product._id}`}>
+
+            <button className="view-btn">
+              View Product
+            </button>
+
+          </Link>
+
+
+
+          <button
+            className="cart-btn"
+            onClick={handleAddToCart}
+          >
+            Add to Cart
+          </button>
+
+
+        </div>
+
+
+      </div>
+
+
     </div>
+
   );
+
 }
+
 
 export default ProductCard;

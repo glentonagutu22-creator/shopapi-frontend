@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import "../styles/Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -26,44 +27,58 @@ function Login() {
         formData
       );
 
-      const token = response.data.token;
-
       localStorage.setItem("token", response.data.token);
-localStorage.setItem("role", response.data.role);
-
+      localStorage.setItem("role", response.data.role);
 
       alert("Login successful");
 
       navigate("/");
+
     } catch (error) {
       console.log(error.response?.data || error.message);
     }
   }
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="login-page">
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+      <div className="login-card">
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+        <h1>Welcome Back</h1>
 
-        <button type="submit">
-          Login
-        </button>
-      </form>
+        <p className="subtitle">
+          Login to your ShopSphere account
+        </p>
+
+
+        <form onSubmit={handleSubmit}>
+
+          <input
+            name="email"
+            type="email"
+            placeholder="Email address"
+            value={formData.email}
+            onChange={handleChange}
+          />
+
+
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+
+
+          <button type="submit">
+            Login
+          </button>
+
+        </form>
+
+      </div>
+
     </div>
   );
 }
