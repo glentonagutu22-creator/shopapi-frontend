@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import "../styles/Navbar.css";
 
 function Navbar() {
+    
+const [menuOpen, setMenuOpen] = useState(false);
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -17,8 +19,14 @@ function Navbar() {
   return (
     <nav>
       <h2>ShopSphere</h2>
+      <button
+  className="menu-btn"
+  onClick={() => setMenuOpen(!menuOpen)}
+>
+  ☰
+</button>
 
-      <div>
+      <div className={menuOpen ? "nav-links active" : "nav-links"}>
         <Link to="/admin">Admin</Link>
         <Link to="/admin/orders">
   Orders

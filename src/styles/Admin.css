@@ -1,7 +1,9 @@
 .admin-container {
+    width: 100%;
   max-width: 1200px;
   margin: auto;
-  padding: 30px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 
@@ -60,4 +62,25 @@
   height:180px;
   object-fit:cover;
   border-radius:10px;
+}
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 15px;
+  }
+
+  .admin-form {
+    padding: 15px;
+  }
+
+  .admin-title {
+    font-size: 1.5rem;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-product-card img {
+    height: 200px;
+  }
 }
