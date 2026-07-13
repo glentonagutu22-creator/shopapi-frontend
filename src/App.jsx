@@ -51,9 +51,7 @@ function App() {
 />
       </Routes>
       <>
-  <Routes>
-    {/* your routes */}
-  </Routes>
+  
 
   <ToastContainer
     position="top-right"
