@@ -4,8 +4,8 @@ A full-stack e-commerce web application that allows customers to browse products
 
 ## 🚀 Live Demo
 
-- Frontend: <YOUR_FRONTEND_RENDER_URL>
-- Backend API: <YOUR_BACKEND_RENDER_URL>
+- Frontend: https://shopapi-frontend.onrender.com
+- Backend API: https://shopapi-backend-itks.onrender.com
 
 ---
 
