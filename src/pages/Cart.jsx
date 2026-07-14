@@ -73,61 +73,93 @@ const total = cart.reduce(
   0
 );
 console.log("Current orderId state:", orderId);
-  return (
-    <div className="cart-container">
-      <h1>Shopping Cart</h1>
+ return (
+  <div className="cart-container">
+    <h1 className="cart-title">Shopping Cart</h1>
 
-      {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        cart.map((product, index) => (
-          <div className="cart-item" key={index}>
-            <h3>{product.name}</h3>
-           <p>KSh {product.price}</p>
+    {cart.length === 0 ? (
+      <div className="empty-cart">
+        <h2>Your cart is empty 🛒</h2>
+        <p>Add some products to continue shopping.</p>
+      </div>
+    ) : (
+      <>
+        <div className="cart-items">
+          {cart.map((product, index) => (
+            <div className="cart-item" key={index}>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="cart-image"
+              />
 
-<p>
-  <strong>Quantity:</strong> {product.quantity}
-</p>
+              <div className="cart-details">
+                <h3>{product.name}</h3>
 
-<button className="qty-btn" onClick={() => decreaseQuantity(product._id)}>
-  -
-</button>
+                <p className="price">
+                  KSh {product.price.toLocaleString()}
+                </p>
 
-<button className="qty-btn" onClick={() => increaseQuantity(product._id)}>
-  +
-</button>
+                <div className="quantity-controls">
+                  <button
+                    className="qty-btn"
+                    onClick={() => decreaseQuantity(product._id)}
+                  >
+                    -
+                  </button>
 
-<button className="remove-btn" onClick={() => removeFromCart(product._id)}>
-  Remove
-</button>
+                  <span>{product.quantity}</span>
 
+                  <button
+                    className="qty-btn"
+                    onClick={() => increaseQuantity(product._id)}
+                  >
+                    +
+                  </button>
+                </div>
 
-<hr />
+                <button
+                  className="remove-btn"
+                  onClick={() => removeFromCart(product._id)}
+                >
+                  Remove
+                </button>
+              </div>
 
-            <hr />
-          </div>
-        ))
-      )}
-      <h2>
-  Total: KSh {total}
-</h2>
-<input
-  type="text"
-  placeholder="2547XXXXXXXX"
-  value={phone}
-  onChange={(e) => setPhone(e.target.value)}
-/>
-<button onClick={handleCheckout}>
-  Place Order
-</button>
-<button
-  onClick={handlePayment}
-  disabled={loading || !orderId}
->
-  {loading ? "Sending STK..." : "Pay with M-Pesa"}
-</button>
-    </div>
-  );
+              <div className="subtotal">
+                <strong>
+                  KSh {(product.price * product.quantity).toLocaleString()}
+                </strong>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="cart-summary">
+          <h2>Total: KSh {total.toLocaleString()}</h2>
+
+          <input
+            type="text"
+            placeholder="2547XXXXXXXX"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+
+          <button onClick={handleCheckout}>
+            Place Order
+          </button>
+
+          <button
+            onClick={handlePayment}
+            disabled={loading || !orderId}
+          >
+            {loading ? "Sending STK..." : "Pay with M-Pesa"}
+          </button>
+        </div>
+      </>
+    )}
+  </div>
+);
 }
 
 export default Cart;

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import WhatsAppButton from "./components/WhatsAppButton";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
@@ -14,7 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Admin from "./pages/Admin";
 import AdminRoute from "./components/AdminRoute";
 import AdminOrders from "./pages/AdminOrders";
-
+import TawkChat from "./components/TawkChat";
 function App() {
   return (
     <BrowserRouter>
@@ -58,6 +58,8 @@ function App() {
     autoClose={3000}
   />
 </>
+<WhatsAppButton />
+<TawkChat />
     </BrowserRouter>
   );
 }
